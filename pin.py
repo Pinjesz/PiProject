@@ -17,6 +17,7 @@ GPIO.output(M0_z, GPIO.LOW)
 
 while True:
     GPIO.output(DIR_z, GPIO.HIGH)
+    print("left")
     for i in range(50):
         time.sleep(0.01)
         GPIO.output(STEP_z, GPIO.HIGH)
@@ -24,6 +25,7 @@ while True:
         GPIO.output(STEP_z, GPIO.LOW)
 
     GPIO.output(DIR_z, GPIO.LOW)
+    print("right")
     for i in range(50):
         time.sleep(0.01)
         GPIO.output(STEP_z, GPIO.HIGH)
