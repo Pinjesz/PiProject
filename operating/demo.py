@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-import keyboard
+import readchar
 
 # pins:
 OUTER_STEP = 13
@@ -65,13 +65,17 @@ def down():
 
 
 def main():
-    keyboard.on_press_key("left", left)
-    keyboard.on_press_key("right", right)
-    keyboard.on_press_key("down", down)
-    keyboard.on_press_key("up", up)
     try:
         while True:
-            pass
+            c = readchar.readchar()
+            if c == 'a':
+                left()
+            if c == 'd':
+                right()
+            if c == 'w':
+                up()
+            if c == 's':
+                down()
     except KeyboardInterrupt:
         print("exit")
 
