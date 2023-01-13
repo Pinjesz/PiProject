@@ -1,8 +1,11 @@
 import RPi.GPIO as GPIO
 import time
 
-STEP_z = 13
-DIR_z = 15
+# STEP_z = 13
+# DIR_z = 15
+
+STEP_z = 16
+DIR_z = 12
 
 GPIO.setmode(GPIO.BOARD)
 
