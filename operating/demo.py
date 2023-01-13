@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-from pynput.keyboard import Key, Listener
 import keyboard
 
 # pins:
@@ -27,33 +26,6 @@ def setup_pins():
     GPIO.output(OUTER_M0, GPIO.LOW)
     GPIO.output(OUTER_M1, GPIO.LOW)
     GPIO.output(INNER_M0, GPIO.LOW)
-
-
-def on_press(key):
-    info = False
-    if key == Key.left:
-        left()
-        info = True
-
-    if key == Key.right:
-        right()
-        info = True
-
-    if key == Key.up:
-        up()
-        info = True
-
-    if key == Key.down:
-        down()
-        info = True
-
-    if info:
-        print(f'{key} pressed')
-
-
-def on_release(key):
-    if key == Key.esc:
-        return False
 
 
 def left():
