@@ -65,6 +65,11 @@ def main():
     keyboard.on_press_key("right", right)
     keyboard.on_press_key("down", down)
     keyboard.on_press_key("up", up)
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        print("exit")
 
 
 if __name__ == "__main__":
