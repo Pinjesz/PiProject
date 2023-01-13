@@ -32,7 +32,7 @@ def left():
     GPIO.output(OUTER_DIR, GPIO.LOW)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     time.sleep(0.01)
-    GPIO.output(OUTER_DIR, GPIO.LOW)
+    GPIO.output(OUTER_STEP, GPIO.LOW)
     time.sleep(0.01)
     print("left")
 
@@ -41,7 +41,7 @@ def right():
     GPIO.output(OUTER_DIR, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     time.sleep(0.01)
-    GPIO.output(OUTER_DIR, GPIO.LOW)
+    GPIO.output(OUTER_STEP, GPIO.LOW)
     time.sleep(0.01)
     print("right")
 
