@@ -21,7 +21,7 @@ def setup_pins():
     GPIO.setup(OUTER_M0, GPIO.OUT)
     GPIO.setup(OUTER_M1, GPIO.OUT)
     GPIO.setup(INNER_STEP, GPIO.OUT)
-    GPIO.setup(INNER_M0, GPIO.OUT)
+    GPIO.setup(INNER_DIR, GPIO.OUT)
     GPIO.setup(INNER_M0, GPIO.OUT)
     GPIO.output(OUTER_M0, GPIO.LOW)
     GPIO.output(OUTER_M1, GPIO.LOW)
