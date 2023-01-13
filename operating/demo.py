@@ -76,6 +76,8 @@ def main():
                 up()
             if c == 's':
                 down()
+            if c == 'q':
+                exit()
     except KeyboardInterrupt:
         print("exit")
 
