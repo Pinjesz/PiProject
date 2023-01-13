@@ -34,6 +34,7 @@ def left():
     time.sleep(0.01)
     GPIO.output(OUTER_DIR, GPIO.LOW)
     time.sleep(0.01)
+    print("left")
 
 
 def right():
@@ -42,6 +43,7 @@ def right():
     time.sleep(0.01)
     GPIO.output(OUTER_DIR, GPIO.LOW)
     time.sleep(0.01)
+    print("right")
 
 
 def up():
@@ -50,6 +52,7 @@ def up():
     time.sleep(0.01)
     GPIO.output(INNER_STEP, GPIO.LOW)
     time.sleep(0.01)
+    print("up")
 
 
 def down():
@@ -58,6 +61,7 @@ def down():
     time.sleep(0.01)
     GPIO.output(INNER_STEP, GPIO.LOW)
     time.sleep(0.01)
+    print("down")
 
 
 def main():
