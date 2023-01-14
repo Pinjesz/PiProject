@@ -10,6 +10,7 @@ if __name__ == "__main__":
         resolution = (1280, 480)
     else:
         resolution = (args[1], args[2])
+    print(f"Camera resolution: {resolution[0]} x {resolution[1]}")
 
     cam = Picamera2()
     preview_config = cam.create_preview_configuration(
@@ -18,7 +19,6 @@ if __name__ == "__main__":
     cam.start()
 
     streamer_rgb = VS.VideoStreamer('rgb')
-
     streamer_rgb.run()
 
     try:
@@ -29,7 +29,6 @@ if __name__ == "__main__":
             frame[:,:,1] = np.reshape(buffer[1::3], (resolution[1], resolution[0]))
             frame[:,:,0] = np.reshape(buffer[2::3], (resolution[1], resolution[0]))
             streamer_rgb.publishFrame(frame)
-            print(np.mean(frame))
     except Exception as e:
         streamer_rgb.close()
         print(e)
