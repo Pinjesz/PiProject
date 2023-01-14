@@ -31,28 +31,24 @@ def left():
     GPIO.output(OUTER_DIR, GPIO.LOW)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.LOW)
-    print("left")
 
 
 def right():
     GPIO.output(OUTER_DIR, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.LOW)
-    print("right")
 
 
 def up():
     GPIO.output(INNER_DIR, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.LOW)
-    print("up")
 
 
 def down():
     GPIO.output(INNER_DIR, GPIO.LOW)
     GPIO.output(INNER_STEP, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.LOW)
-    print("down")
 
 
 def steer(c: str):

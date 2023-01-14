@@ -17,19 +17,18 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
         def run_camera():
             CameraRead.run(resolution, camera_choose)
 
-        cameras = threading.Thread(target=run_camera)
-        cameras.daemon = True
-        cameras.start()
+        cameras_thread = threading.Thread(target=run_camera)
+        cameras_thread.daemon = True
+        cameras_thread.start()
     except:
         print("Error starting cameras")
 
-    steering.setup_pins()
-    while True:
-        try:
-            time.sleep(0.001)
-            if(restAP.controlChanged()):
-                control = restAP.pollControl()
-                print("Received new control: " + str(control))
+    try:
+        steering.setup_pins()
+
+        def run_control():
+            while True:
+                control = restAP.lookupControl()
                 if control.value & (2**0) > 0:
                     steering.right()
                 if control.value & (2**1) > 0:
@@ -38,6 +37,19 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
                     steering.up()
                 if control.value & (2**3) > 0:
                     steering.down()
+
+        control_thread = threading.Thread(target=run_control)
+        control_thread.daemon = True
+        control_thread.start()
+    except:
+        print("Error starting control")
+
+    while True:
+        try:
+            time.sleep(0.001)
+            if(restAP.controlChanged()):
+                control = restAP.pollControl()
+                print("Received new control: " + str(control))
 
         except KeyboardInterrupt:
             break

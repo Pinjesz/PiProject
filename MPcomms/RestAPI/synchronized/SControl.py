@@ -67,8 +67,9 @@ class SControl(object):
 
     def postControl(self, control: Controls) -> None: # sets _changed flag
         self._mutex.acquire()
-        self._control = control
-        self._changed = True
+        if self._control != control:
+            self._control = control
+            self._changed = True
         self._mutex.release()
 
     def setControl(self, control: Controls) -> None: # leaves _changed flag unchanged
