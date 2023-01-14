@@ -1,6 +1,6 @@
 
 # Import AccessPoint variable form server package:
-from MPcomms.RestAPI.server import restAP
+from RestAPI.server import restAP
 
 # Other imports:
 import time
