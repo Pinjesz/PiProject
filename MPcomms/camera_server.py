@@ -5,6 +5,7 @@ import CameraRead
 import sys
 import steering
 
+
 def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     # Start server as daemon:
     restAP.run_async()
@@ -12,12 +13,15 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     print("Server started on address localhost:5000/api")
     print("Documentation accessible at http://localhost:5000/api/doc")
 
-    def run_camera():
-        CameraRead.run(resolution, camera_choose)
+    try:
+        def run_camera():
+            CameraRead.run(resolution, camera_choose)
 
-    cameras = threading.Thread(target=run_camera)
-    cameras.daemon = True
-    cameras.start()
+        cameras = threading.Thread(target=run_camera)
+        cameras.daemon = True
+        cameras.start()
+    except:
+        print("Error starting cameras")
 
     while True:
         try:
