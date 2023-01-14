@@ -275,7 +275,7 @@ class SetTowerControl(Resource):
                         'steer': restAP.lookupControl().value
                         }
                 else:
-                    abort(404, "There is no active connection with passed ID")
+                    abort(404, f"{restAP.getVehicleID()} There is no active connection with passed ID")
             else:
                 abort(406, "Wrong operation code number")
         else:
