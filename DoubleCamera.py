@@ -2,7 +2,7 @@ import MPcomms.RTMPVideo.streaming.VideoStreamer as VS
 from picamera2 import Picamera2
 
 if __name__ == "__main__":
-    resolution = (3840, 1080)
+    resolution = (1280, 480)
     # resolution = (4056, 3040)
 
     cam = Picamera2()
@@ -19,5 +19,6 @@ if __name__ == "__main__":
         while True:
             img_rgb = cam.capture_buffer()
             streamer_rgb.publishFrame(img_rgb)
-    except:
+    except Exception as e:
         streamer_rgb.close()
+        print(e)
