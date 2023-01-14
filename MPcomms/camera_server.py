@@ -28,6 +28,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
 
         def run_control():
             while True:
+                time.sleep(0.0001)
                 control = restAP.lookupControl()
                 if control.value & (2**0) > 0:
                     steering.right()
