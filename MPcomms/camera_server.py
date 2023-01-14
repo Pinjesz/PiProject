@@ -23,37 +23,47 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     except:
         print("Error starting cameras")
 
+    steering.setup_pins()
+    # try:
+
+    #     def run_control():
+    #         while True:
+    #             time.sleep(0.0001)
+    #             control = restAP.lookupControl()
+    #             if control.value & (2**0) > 0:
+    #                 steering.right()
+    #             if control.value & (2**1) > 0:
+    #                 steering.left()
+    #             if control.value & (2**2) > 0:
+    #                 steering.up()
+    #             if control.value & (2**3) > 0:
+    #                 steering.down()
+
+    #     control_thread = threading.Thread(target=run_control)
+    #     control_thread.daemon = True
+    #     control_thread.start()
+    # except:
+        # print("Error starting control")
+
     try:
-        steering.setup_pins()
-
-        def run_control():
-            while True:
-                time.sleep(0.0001)
-                control = restAP.lookupControl()
-                if control.value & (2**0) > 0:
-                    steering.right()
-                if control.value & (2**1) > 0:
-                    steering.left()
-                if control.value & (2**2) > 0:
-                    steering.up()
-                if control.value & (2**3) > 0:
-                    steering.down()
-
-        control_thread = threading.Thread(target=run_control)
-        control_thread.daemon = True
-        control_thread.start()
-    except:
-        print("Error starting control")
-
-    while True:
-        try:
+        while True:
             time.sleep(0.001)
             if(restAP.controlChanged()):
                 control = restAP.pollControl()
                 print("Received new control: " + str(control))
 
-        except KeyboardInterrupt:
-            break
+            control = restAP.lookupControl()
+            if control.value & (2**0) > 0:
+                steering.right()
+            if control.value & (2**1) > 0:
+                steering.left()
+            if control.value & (2**2) > 0:
+                steering.up()
+            if control.value & (2**3) > 0:
+                steering.down()
+
+    except KeyboardInterrupt:
+        exit()
 
 
 if __name__ == "__main__":
