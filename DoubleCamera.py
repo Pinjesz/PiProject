@@ -19,7 +19,7 @@ def main(resolution: list = (640, 480), camera_choose: str = 'b'):
 
     cam = Picamera2()
     preview_config = cam.create_preview_configuration(
-        {"format": "BGR888", "size": resolution})
+        {"format": "BGR888", "size": (2*resolution[0], resolution[1])})
     cam.configure(preview_config)
     cam.start()
 
