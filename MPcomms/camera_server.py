@@ -23,6 +23,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     except:
         print("Error starting cameras")
 
+    steering.setup_pins()
     while True:
         try:
             time.sleep(0.001)
