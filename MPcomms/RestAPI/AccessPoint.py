@@ -32,6 +32,9 @@ class AccessPoint(object):
         self._th.daemon = True
         self._th.start()
 # ---
+    def stop_async(self) -> None:
+        self._th.join()
+# ---
 # --- Connection specyfic: ---
     def getVehicleID(self) -> int:
         return self._connection.getID()

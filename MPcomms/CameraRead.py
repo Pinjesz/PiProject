@@ -5,7 +5,7 @@ import sys
 from picamera2 import Picamera2
 
 
-def main(resolution: list = (640, 480), camera_choose: str = 'b'):
+def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     left = True
     right = True
     if camera_choose == 'l':
@@ -55,16 +55,16 @@ if __name__ == "__main__":
     nums = [int(arg) for arg in args if arg.isdecimal()]
     if "-r" in args and "-l" not in args:
         if len(nums) == 2:
-            main(nums, 'r')
+            run(nums, 'r')
         else:
-            main(camera_choose='r')
+            run(camera_choose='r')
     elif "-r" not in args and "-l" in args:
         if len(nums) == 2:
-            main(nums, 'l')
+            run(nums, 'l')
         else:
-            main(camera_choose='l')
+            run(camera_choose='l')
     else:
         if len(nums) == 2:
-            main(nums)
+            run(nums)
         else:
-            main()
+            run()
