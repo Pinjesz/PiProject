@@ -12,15 +12,15 @@ if __name__ == "__main__":
     cam.configure(preview_config)
     cam.start()
 
-    streamer_rgb = VS.VideoStreamer('rgb')
+    # streamer_rgb = VS.VideoStreamer('rgb')
 
-    streamer_rgb.run()
+    # streamer_rgb.run()
 
     try:
         while True:
             img_rgb : npt.ArrayLike = cam.capture_buffer()
             print(img_rgb)
-            streamer_rgb.publishFrame(img_rgb)
+            # streamer_rgb.publishFrame(img_rgb)
     except Exception as e:
-        streamer_rgb.close()
+        # streamer_rgb.close()
         print(e)
