@@ -4,6 +4,7 @@ from flask import Flask, Blueprint
 from flask_restx import Api
 from waitress import serve
 from RestAPI.synchronized.SMode import *
+from RestAPI.synchronized.SControl import *
 from RestAPI.synchronized.SEmergencyAction import *
 from RestAPI.synchronized.SConnection import *
 from RestAPI.messaging.Messages import *
@@ -18,6 +19,7 @@ class AccessPoint(object):
 # ---
     def __init__(self):
         self._mode = SMode()
+        self._control = SControl()
         self._emergencyAction = SEmergencyAction()
         self._connection = SConnection()
         self._th = None
@@ -59,7 +61,7 @@ class AccessPoint(object):
         if toggle:
             self._connection.enable()
         else:
-            self._connection.disable()    
+            self._connection.disable()
 # ---
 # --- Messaging specyfic ---
     def send(self, msg:Message) -> bool:
@@ -127,7 +129,31 @@ class AccessPoint(object):
         if(action != EmergencyActions.INVALID):
             self._emergencyAction.setAction(action)
 # ---
+# --- Control specyfic: ---
+    def controlChanged(self) -> bool:
+        return self._control.isChanged()
+# ---
+    def getControl(self) -> SControl:
+        return self._control
+# ---
+    def pollControl(self) -> Controls:
+        return self._control.pollControl()
+# ---
+    def lookupControl(self) -> Controls:
+        return self._control.lookupControl()
+# ---
+    def postControl(self, code) -> None:
+        newControl = controlSwitch.get(code, Controls.INVALID)
+        if(newControl != Controls.INVALID):
+            self._control.postControl(newControl)
+# ---
+    def setControl(self, control:Controls) -> None:
+        if(control != Controls.INVALID):
+            self._control.setControl(control)
+# ---
 # --- AccessPoint ends here: ---
+
+
 
 AccessPoint.app.register_blueprint(AccessPoint.blueprint)
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---

@@ -6,3 +6,4 @@ class Magic(Enum):
     CONNECTION_ADD          = 0xEE15 # 60949
     CONNECTION_DELETE       = 0x3AD5 # 15061
     CONNECTION_TOGGLE       = 0x5C25 # 23589
+    TOWER_CONTROL           = 0xAB13 # 43795

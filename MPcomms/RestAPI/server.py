@@ -55,6 +55,17 @@ emergencyOutModel = AccessPoint.api.model('EmergencyActionResponse', {
     'vid': fields.Integer(description='Vehicle ID'),
     'ea': fields.Integer(description='Emergency action that will be performed')
 })
+# ---
+controlInModel = AccessPoint.api.model('ControlTowerRequest', {
+    'vid': fields.Integer(required=True, description='Vehicle ID'),
+    'steer': fields.Integer(required=True, description='Steering code'),
+    'mgc': fields.Integer(required=True, default=Magic.TOWER_CONTROL.value, description='Magic number for verification')
+})
+# ---
+controlOutModel = AccessPoint.api.model('ControlTowerResponse', {
+    'vid': fields.Integer(description='Vehicle ID'),
+    'steer': fields.Integer(description='Steering code')
+})
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -104,6 +115,17 @@ emergencyInParser.add_argument(
     'vid', type=int, required=True, help='Vehicle ID'
 )
 emergencyInParser.add_argument(
+    'mgc', type=int, required=True, help='Magic number for verification'
+)
+# ---
+controlInParser = AccessPoint.api.parser()
+controlInParser.add_argument(
+    'vid', type=int, required=True, help='Vehicle ID'
+)
+controlInParser.add_argument(
+    'steer', type=int, required=True, help='Steering code'
+)
+controlInParser.add_argument(
     'mgc', type=int, required=True, help='Magic number for verification'
 )
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -169,9 +191,9 @@ class GetMode(Resource):
     def get(self, vid):
         if(restAP.isOnline()):
             if(vid == restAP.getVehicleID()):
-                return { 
+                return {
                     'vid': vid,
-                    'mode': restAP.lookupMode().value 
+                    'mode': restAP.lookupMode().value
                     }
             else:
                 abort(404, "Not an active vehicle")
@@ -191,10 +213,10 @@ class SetMode(Resource):
                     restAP.postMode(args['mode'])
                     return {
                         'vid': restAP.getVehicleID(),
-                        'mode': restAP.lookupMode().value 
+                        'mode': restAP.lookupMode().value
                         }
                 else:
-                    abort(404, "There is no active connection with passed ID")    
+                    abort(404, "There is no active connection with passed ID")
             else:
                 abort(406, "Wrong operation code number")
         else:
@@ -230,6 +252,27 @@ class SetEmergencyAction(Resource):
                     return {
                         'vid': restAP.getVehicleID(),
                         'ea': restAP.lookupEmergencyAction().value
+                        }
+                else:
+                    abort(404, "There is no active connection with passed ID")
+            else:
+                abort(406, "Wrong operation code number")
+        else:
+            abort(409, "There is no active connection")
+
+@AccessPoint.api.route('/control')
+class SetTowerControl(Resource):
+    @AccessPoint.api.expect(controlInModel)
+    @AccessPoint.api.marshal_with(controlOutModel)
+    def post(self):
+        if(restAP.isOnline()):
+            args = controlInParser.parse_args()
+            if(args['mgc'] == Magic.TOWER_CONTROL.value):
+                if(args['vid'] == restAP.getVehicleID()):
+                    restAP.postControl(args['steer'])
+                    return {
+                        'vid': restAP.getVehicleID(),
+                        'steer': restAP.lookupControl().value
                         }
                 else:
                     abort(404, "There is no active connection with passed ID")
