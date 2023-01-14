@@ -1,5 +1,6 @@
 import MPcomms.RTMPVideo.streaming.VideoStreamer as VS
 import numpy.typing as npt
+import numpy as np
 from picamera2 import Picamera2
 
 if __name__ == "__main__":
@@ -18,8 +19,12 @@ if __name__ == "__main__":
 
     try:
         while True:
-            img_rgb : npt.NDArray = cam.capture_buffer()
-            streamer_rgb.publishFrame(img_rgb)
+            buffer : npt.NDArray = cam.capture_buffer()
+            frame = np.zeros((resolution[1], resolution[0], 3), "uint8")
+            frame[:,:,1] = np.transpose(np.reshape(buffer[1:3:], resolution[0], resolution[1]))
+            frame[:,:,2] = np.transpose(np.reshape(buffer[2:3:], resolution[0], resolution[1]))
+            frame[:,:,3] = np.transpose(np.reshape(buffer[3:3:], resolution[0], resolution[1]))
+            streamer_rgb.publishFrame(frame)
     except Exception as e:
         streamer_rgb.close()
         print(e)
