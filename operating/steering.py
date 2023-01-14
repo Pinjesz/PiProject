@@ -64,20 +64,25 @@ def down():
     print("down")
 
 
+def steer(c: str):
+    if c == 'a':
+        left()
+    elif c == 'd':
+        right()
+    elif c == 'w':
+        up()
+    elif c == 's':
+        down()
+    elif c == 'q':
+        print("Finished")
+        exit()
+
+
 def main():
     try:
         while True:
             c = readchar.readchar()
-            if c == 'a':
-                left()
-            if c == 'd':
-                right()
-            if c == 'w':
-                up()
-            if c == 's':
-                down()
-            if c == 'q':
-                exit()
+            steer(c)
     except KeyboardInterrupt:
         print("exit")
 
