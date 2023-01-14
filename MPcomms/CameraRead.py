@@ -1,4 +1,4 @@
-import MPcomms.RTMPVideo.streaming.VideoStreamer as VS
+import RTMPVideo.streaming.VideoStreamer as VS
 import numpy.typing as npt
 import numpy as np
 import sys
