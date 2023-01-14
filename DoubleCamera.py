@@ -25,9 +25,9 @@ if __name__ == "__main__":
         while True:
             buffer : npt.NDArray = cam.capture_buffer()
             frame = np.zeros((resolution[1], resolution[0], 3), np.uint8)
-            frame[:,:,0] = np.reshape(buffer[0::3], (resolution[1], resolution[0]))
+            frame[:,:,2] = np.reshape(buffer[0::3], (resolution[1], resolution[0]))
             frame[:,:,1] = np.reshape(buffer[1::3], (resolution[1], resolution[0]))
-            frame[:,:,2] = np.reshape(buffer[2::3], (resolution[1], resolution[0]))
+            frame[:,:,0] = np.reshape(buffer[2::3], (resolution[1], resolution[0]))
             streamer_rgb.publishFrame(frame)
             print(np.mean(frame))
     except Exception as e:
