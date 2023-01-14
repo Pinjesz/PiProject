@@ -29,9 +29,6 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
         except KeyboardInterrupt:
             break
 
-    cameras.join()
-    restAP.stop_async()
-
 
 if __name__ == "__main__":
     args = sys.argv
