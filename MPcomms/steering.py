@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-import time
 import readchar
 
 # pins:
@@ -31,36 +30,28 @@ def setup_pins():
 def left():
     GPIO.output(OUTER_DIR, GPIO.LOW)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
-    # time.sleep(0.0001)
     GPIO.output(OUTER_STEP, GPIO.LOW)
-    # time.sleep(0.0001)
     print("left")
 
 
 def right():
     GPIO.output(OUTER_DIR, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
-    # time.sleep(0.0001)
     GPIO.output(OUTER_STEP, GPIO.LOW)
-    # time.sleep(0.0001)
     print("right")
 
 
 def up():
     GPIO.output(INNER_DIR, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.HIGH)
-    # time.sleep(0.0001)
     GPIO.output(INNER_STEP, GPIO.LOW)
-    # time.sleep(0.0001)
     print("up")
 
 
 def down():
     GPIO.output(INNER_DIR, GPIO.LOW)
     GPIO.output(INNER_STEP, GPIO.HIGH)
-    # time.sleep(0.0001)
     GPIO.output(INNER_STEP, GPIO.LOW)
-    # time.sleep(0.0001)
     print("down")
 
 

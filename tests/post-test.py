@@ -3,7 +3,7 @@ import requests
 url = 'http://192.168.0.108:5000/api/control'
 myobj = {
     'vid': 38,
-    'steer': 6,
+    'steer': 4,
     'mgc' : 43795
 }
 
