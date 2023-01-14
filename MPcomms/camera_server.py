@@ -29,13 +29,13 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
             if(restAP.controlChanged()):
                 control = restAP.pollControl()
                 print("Received new control: " + str(control))
-                if control & (2**0) > 0:
+                if control.value & (2**0) > 0:
                     steering.right()
-                if control & (2**1) > 0:
+                if control.value & (2**1) > 0:
                     steering.left()
-                if control & (2**2) > 0:
+                if control.value & (2**2) > 0:
                     steering.up()
-                if control & (2**3) > 0:
+                if control.value & (2**3) > 0:
                     steering.down()
 
         except KeyboardInterrupt:
