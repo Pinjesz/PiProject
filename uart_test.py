@@ -22,8 +22,10 @@ def read():
 if ser.isOpen() == False:
     ser.open()  # open serial port if not open
     print("serial opened")
-
-try:
-    read()
-except:
+    try:
+        read()
+    except:
+        ser.close()
+else:
     ser.close()
+
