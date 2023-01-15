@@ -6,6 +6,7 @@ ser = serial.Serial("/dev/serial0", 115200)
 def getTFminiData():
     while True:
         count = ser.in_waiting
+        print(count)
         if count > 8:
             recv = ser.read(9)
             ser.reset_input_buffer()
