@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import serial
 test_string = "Test serial port ...".encode('utf-8')
-port_list = ["/dev/ttyAMA0", "/dev/ttyAMA0", "/dev/ttyS0", "/dev/ttyS"]
+port_list = ["/dev/ttyAMA0", "/dev/ttyS0", "/dev/ttyS"]
 for port in port_list:
     try:
         serialPort = serial.Serial(port, 115200, timeout=2)
