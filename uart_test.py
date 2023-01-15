@@ -24,8 +24,9 @@ if ser.isOpen() == False:
     print("serial opened")
     try:
         read()
-    except:
+    except Exception as e:
+        print(e)
         ser.close()
 else:
+    print("Closed")
     ser.close()
-
