@@ -4,7 +4,7 @@ import numpy as np
 
 ser = serial.Serial(
     port="/dev/serial0",
-    baud_rate=115200,
+    baudrate=115200,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
     bytesize=serial.EIGHTBITS,
