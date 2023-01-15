@@ -29,6 +29,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     try:
         while True:
             buffer: npt.NDArray = cam.capture_buffer()
+            print("buffer")
             frame = np.zeros((resolution[1], 2*resolution[0], 3), np.uint8)
             frame[:, :, 2] = np.reshape(
                 buffer[0::3], (resolution[1], 2*resolution[0]))

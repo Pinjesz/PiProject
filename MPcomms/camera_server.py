@@ -16,11 +16,9 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     def run_camera():
         CameraRead.run(resolution, camera_choose)
 
-
     cameras_thread = threading.Thread(target=run_camera)
     cameras_thread.daemon = True
     cameras_thread.start()
-
 
     steering.setup_pins()
     control = 0
