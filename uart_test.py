@@ -32,7 +32,6 @@ else:
     ser.close()
     ser.open()
     print("serial opened")
-    ser.write()
     try:
         read()
     except Exception as e:
