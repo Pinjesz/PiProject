@@ -28,8 +28,10 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
 
     try:
         while True:
-            buffer: npt.NDArray = cam.capture_buffer()
-            print("buffer")
+            try:
+                buffer: npt.NDArray = cam.capture_buffer()
+            except Exception as e:
+                print("Error getting buffer: ", e)
             frame = np.zeros((resolution[1], 2*resolution[0], 3), np.uint8)
             frame[:, :, 2] = np.reshape(
                 buffer[0::3], (resolution[1], 2*resolution[0]))
@@ -37,16 +39,19 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
                 buffer[1::3], (resolution[1], 2*resolution[0]))
             frame[:, :, 0] = np.reshape(
                 buffer[2::3], (resolution[1], 2*resolution[0]))
-            if not right:
-                streamer_rgb.publishFrame(frame[:, :resolution[0], :])
-            elif not left:
-                streamer_rgb.publishFrame(frame[:, resolution[0]+1:, :])
-            else:
-                streamer_rgb.publishFrame(frame)
+            try:
+                if not right:
+                    streamer_rgb.publishFrame(frame[:, :resolution[0], :])
+                elif not left:
+                    streamer_rgb.publishFrame(frame[:, resolution[0]+1:, :])
+                else:
+                    streamer_rgb.publishFrame(frame)
+            except Exception as e:
+                print("Error sending frame: ", e)
     except KeyboardInterrupt:
         print("Finished")
     except Exception as e:
-        print("Cameras not working:", e)
+        print("Something is wrong:", e)
     finally:
         streamer_rgb.close()
 
