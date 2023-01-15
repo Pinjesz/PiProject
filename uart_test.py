@@ -32,7 +32,7 @@ else:
     ser.close()
     ser.open()
     print("serial opened")
-    ser.write(b'\x5a\x05\x07\x01\x67')
+    print(ser.write(b'\x5a\x05\x07\x01\x67'))
     try:
         read()
     except Exception as e:
