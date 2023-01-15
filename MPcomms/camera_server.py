@@ -55,16 +55,12 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
 
             if control & (2**0) > 0:
                 steering.right()
-                print("right")
             elif control & (2**1) > 0:
                 steering.left()
-                print("left")
             elif control & (2**2) > 0:
                 steering.up()
-                print("up")
             if control & (2**3) > 0:
                 steering.down()
-                print("down")
 
     except KeyboardInterrupt:
         exit()
