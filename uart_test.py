@@ -30,3 +30,10 @@ if ser.isOpen() == False:
 else:
     print("Closed")
     ser.close()
+    ser.open()
+    print("serial opened")
+    try:
+        read()
+    except Exception as e:
+        print(e)
+        ser.close()
