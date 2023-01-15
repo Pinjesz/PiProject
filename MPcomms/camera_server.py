@@ -53,16 +53,16 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
                 control = restAP.pollControl().value
                 print("Received new control: " + str(control))
 
-            if control.value & (2**0) > 0:
+            if control & (2**0) > 0:
                 steering.right()
                 print("right")
-            elif control.value & (2**1) > 0:
+            elif control & (2**1) > 0:
                 steering.left()
                 print("left")
-            elif control.value & (2**2) > 0:
+            elif control & (2**2) > 0:
                 steering.up()
                 print("up")
-            if control.value & (2**3) > 0:
+            if control & (2**3) > 0:
                 steering.down()
                 print("down")
 
