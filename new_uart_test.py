@@ -5,7 +5,7 @@ test_string = "Test serial port ...".encode('utf-8')
 port_list = ["/dev/ttyAMA0", "/dev/ttyAMA0", "/dev/ttyS0", "/dev/ttyS"]
 for port in port_list:
     try:
-        serialPort = serial.Serial(port, 9600, timeout=2)
+        serialPort = serial.Serial(port, 115200, timeout=2)
         print("Serial port", port, " ready for test :")
         bytes_sent = serialPort.write(test_string)
         print("Sended", bytes_sent, "byte")
