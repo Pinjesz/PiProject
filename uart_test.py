@@ -3,7 +3,7 @@ import time
 import numpy as np
 
 ser = serial.Serial(
-    port="/dev/serial0",
+    port="/dev/ttyAMA0",
     baudrate=115200,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
@@ -32,6 +32,7 @@ else:
     ser.close()
     ser.open()
     print("serial opened")
+    ser.write(b'\x5a\x05\x07\x01\x67')
     try:
         read()
     except Exception as e:
