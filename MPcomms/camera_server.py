@@ -13,38 +13,14 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     print("Server started on address localhost:5000/api")
     print("Documentation accessible at http://localhost:5000/api/doc")
 
-    try:
-        def run_camera():
-            CameraRead.run(resolution, camera_choose)
+    def run_camera():
+        CameraRead.run(resolution, camera_choose)
 
-        cameras_thread = threading.Thread(target=run_camera)
-        cameras_thread.daemon = True
-        cameras_thread.start()
-    except:
-        print("Error starting cameras")
+    cameras_thread = threading.Thread(target=run_camera)
+    cameras_thread.daemon = True
+    cameras_thread.start()
 
     steering.setup_pins()
-    # try:
-
-    #     def run_control():
-    #         while True:
-    #             time.sleep(0.0001)
-    #             control = restAP.lookupControl()
-    #             if control.value & (2**0) > 0:
-    #                 steering.right()
-    #             if control.value & (2**1) > 0:
-    #                 steering.left()
-    #             if control.value & (2**2) > 0:
-    #                 steering.up()
-    #             if control.value & (2**3) > 0:
-    #                 steering.down()
-
-    #     control_thread = threading.Thread(target=run_control)
-    #     control_thread.daemon = True
-    #     control_thread.start()
-    # except:
-        # print("Error starting control")
-
     control = 0
     try:
         while True:

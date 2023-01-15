@@ -45,7 +45,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     except KeyboardInterrupt:
         print("Finished")
     except Exception as e:
-        print(e)
+        print("Cameras not working:", e)
     finally:
         streamer_rgb.close()
 
