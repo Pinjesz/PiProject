@@ -45,22 +45,26 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     # except:
         # print("Error starting control")
 
+    control = 0
     try:
         while True:
             time.sleep(0.001)
             if(restAP.controlChanged()):
-                control = restAP.pollControl()
+                control = restAP.pollControl().value
                 print("Received new control: " + str(control))
 
-            control = restAP.lookupControl()
             if control.value & (2**0) > 0:
                 steering.right()
-            if control.value & (2**1) > 0:
+                print("right")
+            elif control.value & (2**1) > 0:
                 steering.left()
-            if control.value & (2**2) > 0:
+                print("left")
+            elif control.value & (2**2) > 0:
                 steering.up()
+                print("up")
             if control.value & (2**3) > 0:
                 steering.down()
+                print("down")
 
     except KeyboardInterrupt:
         exit()
