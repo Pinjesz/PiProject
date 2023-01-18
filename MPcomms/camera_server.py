@@ -21,22 +21,27 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     cameras_thread.start()
 
     steering.setup_pins()
-    control = 0
+    control_value = 0
     try:
         while True:
             time.sleep(0.001)
             if(restAP.controlChanged()):
-                control = restAP.pollControl().value
+                control = restAP.pollControl()
+                control_value = control.value
                 print("Received new control: " + str(control))
 
-            if control & (2**0) > 0:
+            if control_value & (2**0) > 0:
                 steering.right()
-            elif control & (2**1) > 0:
+            elif control_value & (2**1) > 0:
                 steering.left()
-            elif control & (2**2) > 0:
+            elif control_value & (2**2) > 0:
                 steering.up()
-            if control & (2**3) > 0:
+            if control_value & (2**3) > 0:
                 steering.down()
+            if control_value & (2**4) > 0:
+                steering.laser_on()
+            else:
+                steering.laser_off()
 
     except KeyboardInterrupt:
         exit()

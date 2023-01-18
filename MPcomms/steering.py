@@ -11,6 +11,8 @@ INNER_STEP = 16
 INNER_DIR = 12
 INNER_M0 = 18
 
+LASER = 19
+
 
 def setup_pins():
     GPIO.setmode(GPIO.BOARD)
@@ -22,9 +24,11 @@ def setup_pins():
     GPIO.setup(INNER_STEP, GPIO.OUT)
     GPIO.setup(INNER_DIR, GPIO.OUT)
     GPIO.setup(INNER_M0, GPIO.OUT)
+    GPIO.setup(LASER, GPIO.OUT)
     GPIO.output(OUTER_M0, GPIO.LOW)
     GPIO.output(OUTER_M1, GPIO.LOW)
     GPIO.output(INNER_M0, GPIO.LOW)
+    GPIO.output(LASER, GPIO.LOW)
 
 
 def left():
@@ -51,6 +55,14 @@ def down():
     GPIO.output(INNER_STEP, GPIO.LOW)
 
 
+def laser_on():
+    GPIO.output(LASER, GPIO.HIGH)
+
+
+def laser_off():
+    GPIO.output(LASER, GPIO.LOW)
+
+
 def steer(c: str):
     if c == 'a':
         left()
@@ -60,6 +72,8 @@ def steer(c: str):
         up()
     elif c == 's':
         down()
+    elif c == ' ':
+        laser()
     elif c == 'q':
         print("Finished")
         exit()

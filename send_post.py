@@ -9,14 +9,17 @@ directions = {
     'right': 1,
     'left': 2,
     'up': 4,
-    'down': 8
+    'down': 8,
+    'laser': 16,
+    '_' : 32
 }
 
 opposite = {
     'right': 'left',
     'left': 'right',
     'up': 'down',
-    'down': 'up'
+    'down': 'up',
+    'laser' : '_'
 }
 
 
@@ -26,7 +29,9 @@ class Keyboard(object):
             'right': 0,
             'left': 0,
             'up': 0,
-            'down': 0
+            'down': 0,
+            'laser': 0,
+            '_' : 0
         }
         self._changed = False
         self._mutex = threading.Lock()
@@ -77,6 +82,8 @@ def main(vid: int):
             keyboard.setControl('up')
         if key == Key.down:
             keyboard.setControl('down')
+        if key == Key.space:
+            keyboard.setControl('laser')
 
     def on_release(key):
         # print(f"{key} released")
@@ -88,6 +95,8 @@ def main(vid: int):
             keyboard.resetControl('up')
         if key == Key.down:
             keyboard.resetControl('down')
+        if key == Key.space:
+            keyboard.setControl('laser')
         if key == Key.esc:
             return False
 
