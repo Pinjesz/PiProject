@@ -96,7 +96,7 @@ def main(vid: int):
         if key == Key.down:
             keyboard.resetControl('down')
         if key == Key.space:
-            keyboard.setControl('laser')
+            keyboard.resetControl('laser')
         if key == Key.esc:
             return False
 

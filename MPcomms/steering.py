@@ -15,6 +15,7 @@ LASER = 19
 
 
 def setup_pins():
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
 
     GPIO.setup(OUTER_STEP, GPIO.OUT)
@@ -64,6 +65,7 @@ def laser_off():
 
 
 def steer(c: str):
+    laser_off()
     if c == 'a':
         left()
     elif c == 'd':
@@ -73,7 +75,7 @@ def steer(c: str):
     elif c == 's':
         down()
     elif c == ' ':
-        laser()
+        laser_on()
     elif c == 'q':
         print("Finished")
         exit()
