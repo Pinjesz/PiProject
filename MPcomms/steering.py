@@ -34,7 +34,7 @@ def setup_pins():
 
 
 def left():
-    GPIO.output(OUTER_DIR, GPIO.LOW)
+    GPIO.output(OUTER_DIR, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     time.sleep(0.01)
     GPIO.output(OUTER_STEP, GPIO.LOW)
@@ -42,7 +42,7 @@ def left():
 
 
 def right():
-    GPIO.output(OUTER_DIR, GPIO.HIGH)
+    GPIO.output(OUTER_DIR, GPIO.LOW)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     time.sleep(0.01)
     GPIO.output(OUTER_STEP, GPIO.LOW)
