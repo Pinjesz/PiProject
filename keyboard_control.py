@@ -87,6 +87,25 @@ def connect(address: str) -> int:
         raise e
 
 
+def disconnect(address: str, vid: int) -> int:
+    url = f'http://{address}:5000/api/connect'
+    try:
+        content = {
+            'addr': 'localhost',
+            'port': '8000',
+            'vid': vid,
+            'mgc': 15061
+        }
+        result = requests.delete(url, json=content)
+        vid = int(result.json()['vid'])
+        print(f"Disconnected from vehicle number: {vid}")
+        return vid
+    except Exception as e:
+        print(result.content)
+        print("Cannot delete connection", result)
+        raise e
+
+
 def main(address: str, vid: int):
     keyboard = Keyboard()
 
@@ -154,3 +173,6 @@ if __name__ == "__main__":
     else:
         vid = int(args[1])
     main(address, vid)
+
+    if len(args) == 1:
+        disconnect(address, vid)
