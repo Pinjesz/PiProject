@@ -53,7 +53,7 @@ class Control:
         return round(value, 1)
 
     def is_control_active(speed: float, i: int) -> bool:
-        if Control.control_table[speed][i] == 1:
+        if Control.control_table[abs(speed)][i] == 1:
             return True
         return False
 
