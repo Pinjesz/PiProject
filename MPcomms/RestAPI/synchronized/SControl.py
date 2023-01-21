@@ -40,7 +40,7 @@ class Control:
         return True
 
     def __ne__(self, __o: object) -> bool:
-        return self.__ne__(__o)
+        return self.__eq__(__o)
 
     def __str__(self) -> str:
         return f'pan {self.pan}, tilt {self.tilt}, laser {"yes" if self.laser else "no"}'
