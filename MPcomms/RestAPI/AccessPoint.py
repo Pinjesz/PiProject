@@ -149,6 +149,8 @@ class AccessPoint(object):
         newControl = controlSwitch.get(code, Controls.INVALID)
         if(newControl != Controls.INVALID):
             self._control.postControl(newControl)
+        else:
+            self._control.postControl(Controls.NULL)
 # ---
     def setControl(self, control:Controls) -> None:
         if(control != Controls.INVALID):

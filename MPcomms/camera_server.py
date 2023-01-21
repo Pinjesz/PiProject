@@ -25,23 +25,24 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     try:
         while True:
             time.sleep(0.001)
-            if(restAP.controlChanged()):
-                control = restAP.pollControl()
-                control_value = control.value
-                print("Received new control: " + str(control))
+            if(restAP.isActive()):
+                if(restAP.controlChanged()):
+                    control = restAP.pollControl()
+                    control_value = control.value
+                    print("Received new control: " + str(control))
 
-            if control_value & (2**0) > 0:
-                steering.right()
-            elif control_value & (2**1) > 0:
-                steering.left()
-            elif control_value & (2**2) > 0:
-                steering.up()
-            if control_value & (2**3) > 0:
-                steering.down()
-            if control_value & (2**4) > 0:
-                steering.laser_on()
-            else:
-                steering.laser_off()
+                if control_value & (2**0) > 0:
+                    steering.right()
+                elif control_value & (2**1) > 0:
+                    steering.left()
+                if control_value & (2**2) > 0:
+                    steering.up()
+                elif control_value & (2**3) > 0:
+                    steering.down()
+                if control_value & (2**4) > 0:
+                    steering.laser_on()
+                else:
+                    steering.laser_off()
 
     except KeyboardInterrupt:
         exit()

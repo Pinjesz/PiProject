@@ -11,7 +11,7 @@ directions = {
     'up': 4,
     'down': 8,
     'laser': 16,
-    '_' : 32
+    '_': 32
 }
 
 opposite = {
@@ -19,7 +19,7 @@ opposite = {
     'left': 'right',
     'up': 'down',
     'down': 'up',
-    'laser' : '_'
+    'laser': '_'
 }
 
 
@@ -31,7 +31,7 @@ class Keyboard(object):
             'up': 0,
             'down': 0,
             'laser': 0,
-            '_' : 0
+            '_': 0
         }
         self._changed = False
         self._mutex = threading.Lock()
@@ -68,7 +68,8 @@ class Keyboard(object):
         self._mutex.release()
         return retval
 
-def connect(address:str) -> int:
+
+def connect(address: str) -> int:
     url = f'http://{address}:5000/api/connect'
     try:
         content = {
@@ -85,7 +86,8 @@ def connect(address:str) -> int:
         print("Cannot establish connection", result)
         raise e
 
-def main(address:str, vid: int):
+
+def main(address: str, vid: int):
     keyboard = Keyboard()
 
     def on_press(key):
