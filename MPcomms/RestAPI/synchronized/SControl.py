@@ -40,15 +40,15 @@ class Control:
         return True
 
     def __ne__(self, __o: object) -> bool:
-        return self.__eq__(__o)
+        return not self.__eq__(__o)
 
     def __str__(self) -> str:
         return f'pan {self.pan}, tilt {self.tilt}, laser {"yes" if self.laser else "no"}'
 
     def to_range(value: float):
-        if value > 1:
+        if value >= 1:
             return 1
-        if value < -1:
+        if value <= -1:
             return -1
         return round(value, 1)
 
