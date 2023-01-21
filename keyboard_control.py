@@ -3,7 +3,7 @@ import requests
 import threading
 import sys
 import time
-
+import random
 
 directions = {
     'right': 1,
@@ -68,12 +68,24 @@ class Keyboard(object):
         self._mutex.release()
         return retval
 
+def connect(address:str) -> int:
+    url = f'http://{address}:5000/api/connect'
+    try:
+        content = {
+            'addr': 'localhost',
+            'port': '8080',
+            'vid': random.randint(0, 100),
+            'mgc': 60949
+        }
+        result = requests.post(url, json=content)
+        return result['vid']
+    except:
+        pass
 
-def main(vid: int):
+def main(address:str, vid: int):
     keyboard = Keyboard()
 
     def on_press(key):
-        # print(f"{key} pressed")
         if key == Key.left:
             keyboard.setControl('left')
         if key == Key.right:
@@ -86,7 +98,6 @@ def main(vid: int):
             keyboard.setControl('laser')
 
     def on_release(key):
-        # print(f"{key} released")
         if key == Key.left:
             keyboard.resetControl('left')
         if key == Key.right:
@@ -113,7 +124,7 @@ def main(vid: int):
     except:
         print("Error starting key listener")
 
-    url = 'http://192.168.0.108:5000/api/control'
+    url = f'http://{address}:5000/api/control'
     try:
         while True:
             time.sleep(0.01)
@@ -131,5 +142,10 @@ def main(vid: int):
 
 
 if __name__ == "__main__":
+    address = "192.168.0.108"
     args = sys.argv
-    main(int(args[1]))
+    if len(args) == 1:
+        vid = connect(address)
+    else:
+        vid = int(args[1])
+    main(vid)
