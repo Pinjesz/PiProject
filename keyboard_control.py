@@ -5,51 +5,21 @@ import sys
 import time
 import random
 
-directions = {
-    'right': 1,
-    'left': 2,
-    'up': 4,
-    'down': 8,
-    'laser': 16,
-    '_': 32
-}
-
-opposite = {
-    'right': 'left',
-    'left': 'right',
-    'up': 'down',
-    'down': 'up',
-    'laser': '_'
-}
-
-
 class Keyboard(object):
     def __init__(self) -> None:
-        self._control = {
-            'right': 0,
-            'left': 0,
-            'up': 0,
-            'down': 0,
-            'laser': 0,
-            '_': 0
+        self._controls = {
+            'pan': 0,
+            'tilt': 0,
+            'laser': 0
         }
         self._changed = False
         self._mutex = threading.Lock()
 
-    def setControl(self, control: str):
+    def setControl(self, control_name: str, control:float | bool):
         self._mutex.acquire()
-        if self._control[control] == 0:
-            print(f"set control: {control}")
-            self._control[control] = 1
-            self._control[opposite[control]] = 0
-            self._changed = True
-        self._mutex.release()
-
-    def resetControl(self, control: str):
-        self._mutex.acquire()
-        if self._control[control] == 1:
-            print(f"reset control: {control}")
-            self._control[control] = 0
+        if self._controls[control_name] != control:
+            print(f"set control {control_name} to {control}")
+            self._controls[control_name] = control
             self._changed = True
         self._mutex.release()
 
@@ -59,11 +29,9 @@ class Keyboard(object):
         self._mutex.release()
         return retval
 
-    def pollControl(self) -> int:
+    def pollControl(self) -> dict:
         self._mutex.acquire()
-        retval = 0
-        for direction, value in directions.items():
-            retval += self._control[direction] * value
+        retval = self._controls
         self._changed = False
         self._mutex.release()
         return retval
@@ -106,32 +74,33 @@ def disconnect(address: str, vid: int) -> int:
         raise e
 
 
-def main(address: str, vid: int):
+def main(address: str, vid: int, speed: float):
     keyboard = Keyboard()
 
     def on_press(key):
         if key == Key.left:
-            keyboard.setControl('left')
+            keyboard.setControl('pan', -1*speed)
         if key == Key.right:
-            keyboard.setControl('right')
+            keyboard.setControl('pan', speed)
         if key == Key.up:
-            keyboard.setControl('up')
+            keyboard.setControl('tilt', speed)
         if key == Key.down:
-            keyboard.setControl('down')
+            keyboard.setControl('tilt', -1*speed)
         if key == Key.space:
-            keyboard.setControl('laser')
+            keyboard.setControl('laser', True)
 
     def on_release(key):
+        previous_control = keyboard.pollControl()
         if key == Key.left:
-            keyboard.resetControl('left')
+            keyboard.setControl('pan', max(0, previous_control['pan']))
         if key == Key.right:
-            keyboard.resetControl('right')
+            keyboard.setControl('pan', min(0, previous_control['pan']))
         if key == Key.up:
-            keyboard.resetControl('up')
+            keyboard.setControl('tilt', max(0, previous_control['tilt']))
         if key == Key.down:
-            keyboard.resetControl('down')
+            keyboard.setControl('tilt', min(0, previous_control['tilt']))
         if key == Key.space:
-            keyboard.resetControl('laser')
+            keyboard.setControl('laser', False)
         if key == Key.esc:
             return False
 
@@ -157,7 +126,9 @@ def main(address: str, vid: int):
 
                 content = {
                     'vid': vid,
-                    'steer': control,
+                    'pan': control['pan'],
+                    'tilt': control['tilt'],
+                    'laser': control['laser'],
                     'mgc': 43795
                 }
                 requests.post(url, json=content)
@@ -167,12 +138,13 @@ def main(address: str, vid: int):
 
 if __name__ == "__main__":
     address = "192.168.0.108"
+    speed = 1
     args = sys.argv
     if len(args) == 1:
         vid = connect(address)
     else:
         vid = int(args[1])
-    main(address, vid)
+    main(address, vid, speed)
 
     if len(args) == 1:
         disconnect(address, vid)

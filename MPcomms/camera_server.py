@@ -4,6 +4,7 @@ import threading
 import CameraRead
 import sys
 import steering
+from RestAPI.synchronized.SControl import Control
 
 
 def run(resolution: list = (640, 480), camera_choose: str = 'b'):
@@ -21,31 +22,40 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     cameras_thread.start()
 
     steering.setup_pins()
-    control_value = 0
+    control = Control()
+    i = 0
     try:
         while True:
             time.sleep(0.001)
             if(restAP.isActive()):
                 if(restAP.controlChanged()):
                     control = restAP.pollControl()
-                    control_value = control.value
                     print("Received new control: " + str(control))
-
-                if control_value & (2**0) > 0:
-                    steering.right()
-                elif control_value & (2**1) > 0:
-                    steering.left()
-                if control_value & (2**2) > 0:
-                    steering.up()
-                elif control_value & (2**3) > 0:
-                    steering.down()
-                if control_value & (2**4) > 0:
-                    steering.laser_on()
-                else:
-                    steering.laser_off()
+                i = perform_control(control, i)
 
     except KeyboardInterrupt:
         exit()
+
+
+def perform_control(control: Control, i: int) -> int:
+
+    if Control.is_control_active(control.pan, i):
+        if control.pan > 0:
+            steering.right()
+        else:
+            steering.left()
+    if Control.is_control_active(control.tilt, i):
+        if control.tilt > 0:
+            steering.up()
+        else:
+            steering.down()
+
+    if control.laser:
+        steering.laser_on()
+    else:
+        steering.laser_off()
+
+    return (i+1) % 10
 
 
 if __name__ == "__main__":

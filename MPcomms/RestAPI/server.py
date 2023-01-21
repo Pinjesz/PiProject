@@ -58,13 +58,17 @@ emergencyOutModel = AccessPoint.api.model('EmergencyActionResponse', {
 # ---
 controlInModel = AccessPoint.api.model('ControlTowerRequest', {
     'vid': fields.Integer(required=True, description='Vehicle ID'),
-    'steer': fields.Integer(required=True, description='Steering code'),
+    'pan': fields.Float(required=True, description='Pan speed and direction'),
+    'tilt': fields.Float(required=True, description='Tilt speed and direction'),
+    'laser': fields.Boolean(required=True, description='Is laser on or off'),
     'mgc': fields.Integer(required=True, default=Magic.TOWER_CONTROL.value, description='Magic number for verification')
 })
 # ---
 controlOutModel = AccessPoint.api.model('ControlTowerResponse', {
-    'vid': fields.Integer(description='Vehicle ID'),
-    'steer': fields.Integer(description='Steering code')
+    'vid': fields.Integer(required=True, description='Vehicle ID'),
+    'pan': fields.Float(required=True, description='Pan speed and direction'),
+    'tilt': fields.Float(required=True, description='Tilt speed and direction'),
+    'laser': fields.Boolean(required=True, description='Is laser on or off'),
 })
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -123,7 +127,13 @@ controlInParser.add_argument(
     'vid', type=int, required=True, help='Vehicle ID'
 )
 controlInParser.add_argument(
-    'steer', type=int, required=True, help='Steering code'
+    'pan', type=int, required=True, help='Pan speed and direction'
+)
+controlInParser.add_argument(
+    'tilt', type=int, required=True, help='Tilt speed and direction'
+)
+controlInParser.add_argument(
+    'laser', type=bool, required=True, help='Is laser on or off'
 )
 controlInParser.add_argument(
     'mgc', type=int, required=True, help='Magic number for verification'
@@ -272,10 +282,12 @@ class SetTowerControl(Resource):
             args = controlInParser.parse_args()
             if(args['mgc'] == Magic.TOWER_CONTROL.value):
                 if(args['vid'] == restAP.getVehicleID()):
-                    restAP.postControl(args['steer'])
+                    restAP.postControl(args['pan'], args['tilt'], args['laser'])
                     return {
                         'vid': restAP.getVehicleID(),
-                        'steer': restAP.lookupControl().value
+                        'pan': restAP.lookupControl().pan,
+                        'tilt': restAP.lookupControl().tilt,
+                        'laser': restAP.lookupControl().laser
                     }
                 else:
                     abort(404, "There is no active connection with passed ID")

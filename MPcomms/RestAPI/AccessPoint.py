@@ -139,22 +139,17 @@ class AccessPoint(object):
     def getControl(self) -> SControl:
         return self._control
 # ---
-    def pollControl(self) -> Controls:
+    def pollControl(self) -> Control:
         return self._control.pollControl()
 # ---
-    def lookupControl(self) -> Controls:
+    def lookupControl(self) -> Control:
         return self._control.lookupControl()
 # ---
-    def postControl(self, code) -> None:
-        newControl = controlSwitch.get(code, Controls.INVALID)
-        if(newControl != Controls.INVALID):
-            self._control.postControl(newControl)
-        else:
-            self._control.postControl(Controls.NULL)
+    def postControl(self, pan:float, tilt:float, laser:bool) -> None:
+        self._control.postControl(Control(pan, tilt, laser))
 # ---
-    def setControl(self, control:Controls) -> None:
-        if(control != Controls.INVALID):
-            self._control.setControl(control)
+    def setControl(self, control:Control) -> None:
+        self._control.setControl(control)
 # ---
 # --- AccessPoint ends here: ---
 
