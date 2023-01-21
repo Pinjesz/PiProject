@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import readchar
+import time
 
 # pins:
 OUTER_STEP = 13
@@ -35,25 +36,33 @@ def setup_pins():
 def left():
     GPIO.output(OUTER_DIR, GPIO.LOW)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
+    time.sleep(0.01)
     GPIO.output(OUTER_STEP, GPIO.LOW)
+    time.sleep(0.01)
 
 
 def right():
     GPIO.output(OUTER_DIR, GPIO.HIGH)
     GPIO.output(OUTER_STEP, GPIO.HIGH)
+    time.sleep(0.01)
     GPIO.output(OUTER_STEP, GPIO.LOW)
+    time.sleep(0.01)
 
 
 def up():
     GPIO.output(INNER_DIR, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.HIGH)
+    time.sleep(0.01)
     GPIO.output(INNER_STEP, GPIO.LOW)
+    time.sleep(0.01)
 
 
 def down():
     GPIO.output(INNER_DIR, GPIO.LOW)
     GPIO.output(INNER_STEP, GPIO.HIGH)
+    time.sleep(0.01)
     GPIO.output(INNER_STEP, GPIO.LOW)
+    time.sleep(0.01)
 
 
 def laser_on():
