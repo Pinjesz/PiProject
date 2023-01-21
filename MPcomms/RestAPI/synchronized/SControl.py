@@ -21,12 +21,7 @@ class Control:
         1: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     }
 
-    def __init__(self) -> None:
-        self.pan: float = 0
-        self.tilt: float = 0
-        self.laser: bool = False
-
-    def __init__(self, pan: float, tilt: float, laser: bool) -> None:
+    def __init__(self, pan: float = 0, tilt: float = 0, laser: bool = False) -> None:
         self.pan: float = Control.to_range(pan)
         self.tilt: float = Control.to_range(tilt)
         self.laser: bool = laser
