@@ -50,7 +50,7 @@ def right():
 
 
 def up():
-    GPIO.output(INNER_DIR, GPIO.HIGH)
+    GPIO.output(INNER_DIR, GPIO.LOW)
     GPIO.output(INNER_STEP, GPIO.HIGH)
     time.sleep(0.01)
     GPIO.output(INNER_STEP, GPIO.LOW)
@@ -58,7 +58,7 @@ def up():
 
 
 def down():
-    GPIO.output(INNER_DIR, GPIO.LOW)
+    GPIO.output(INNER_DIR, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.HIGH)
     time.sleep(0.01)
     GPIO.output(INNER_STEP, GPIO.LOW)

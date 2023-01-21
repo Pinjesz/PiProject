@@ -73,14 +73,17 @@ def connect(address:str) -> int:
     try:
         content = {
             'addr': 'localhost',
-            'port': '8080',
+            'port': '8000',
             'vid': random.randint(0, 100),
             'mgc': 60949
         }
         result = requests.post(url, json=content)
-        return result['vid']
-    except:
-        pass
+        vid = int(result.json()['vid'])
+        print(f"Connected to vehicle number: {vid}")
+        return vid
+    except Exception as e:
+        print("Cannot establish connection", result)
+        raise e
 
 def main(address:str, vid: int):
     keyboard = Keyboard()
@@ -148,4 +151,4 @@ if __name__ == "__main__":
         vid = connect(address)
     else:
         vid = int(args[1])
-    main(vid)
+    main(address, vid)
