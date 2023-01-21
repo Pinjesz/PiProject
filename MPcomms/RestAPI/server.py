@@ -133,6 +133,8 @@ controlInParser.add_argument(
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # REST Access Points:
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+
+
 @AccessPoint.api.route('/connect')
 class Connection(Resource):
     @AccessPoint.api.expect(connectInModel)
@@ -194,7 +196,7 @@ class GetMode(Resource):
                 return {
                     'vid': vid,
                     'mode': restAP.lookupMode().value
-                    }
+                }
             else:
                 abort(404, "Not an active vehicle")
         else:
@@ -214,7 +216,7 @@ class SetMode(Resource):
                     return {
                         'vid': restAP.getVehicleID(),
                         'mode': restAP.lookupMode().value
-                        }
+                    }
                 else:
                     abort(404, "There is no active connection with passed ID")
             else:
@@ -232,7 +234,7 @@ class GetEmergencyAction(Resource):
                 return {
                     'vid': vid,
                     'ea': restAP.lookupEmergencyAction().value
-                    }
+                }
             else:
                 abort(404, "Not an active vehicle")
         else:
@@ -252,13 +254,14 @@ class SetEmergencyAction(Resource):
                     return {
                         'vid': restAP.getVehicleID(),
                         'ea': restAP.lookupEmergencyAction().value
-                        }
+                    }
                 else:
                     abort(404, "There is no active connection with passed ID")
             else:
                 abort(406, "Wrong operation code number")
         else:
             abort(409, "There is no active connection")
+
 
 @AccessPoint.api.route('/control')
 class SetTowerControl(Resource):
@@ -273,7 +276,7 @@ class SetTowerControl(Resource):
                     return {
                         'vid': restAP.getVehicleID(),
                         'steer': restAP.lookupControl().value
-                        }
+                    }
                 else:
                     abort(404, "There is no active connection with passed ID")
             else:
@@ -283,9 +286,9 @@ class SetTowerControl(Resource):
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
+
 # test run server:
 if __name__ == '__main__':
     print("Starting server on localhost:5000")
     print("Swagger UI accessible at http://localhost:5000/api/doc")
     restAP.run()
-
