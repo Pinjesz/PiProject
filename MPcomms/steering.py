@@ -33,30 +33,30 @@ def setup_pins():
     GPIO.output(LASER, GPIO.LOW)
 
 
-def left():
+def set_direction_left():
     GPIO.output(OUTER_DIR, GPIO.HIGH)
-    GPIO.output(OUTER_STEP, GPIO.HIGH)
-    time.sleep(0.001)
-    GPIO.output(OUTER_STEP, GPIO.LOW)
-    time.sleep(0.001)
 
 
-def right():
+def set_direction_right():
     GPIO.output(OUTER_DIR, GPIO.LOW)
+
+
+def pan():
     GPIO.output(OUTER_STEP, GPIO.HIGH)
     time.sleep(0.001)
     GPIO.output(OUTER_STEP, GPIO.LOW)
     time.sleep(0.001)
 
 
-def up():
+def set_direction_up():
     GPIO.output(INNER_DIR, GPIO.LOW)
-    GPIO.output(INNER_STEP, GPIO.HIGH)
-    GPIO.output(INNER_STEP, GPIO.LOW)
 
 
-def down():
+def set_direction_down():
     GPIO.output(INNER_DIR, GPIO.HIGH)
+
+
+def tilt():
     GPIO.output(INNER_STEP, GPIO.HIGH)
     GPIO.output(INNER_STEP, GPIO.LOW)
 

@@ -38,17 +38,18 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
 
 
 def perform_control(control: Control, i: int) -> int:
-
     if Control.is_control_active(control.pan, i):
         if control.pan > 0:
-            steering.right()
+            steering.set_direction_right()
         else:
-            steering.left()
+            steering.set_direction_left()
+        steering.pan()
     if Control.is_control_active(control.tilt, i):
         if control.tilt > 0:
-            steering.up()
+            steering.set_direction_up()
         else:
-            steering.down()
+            steering.set_direction_down()
+        steering.tilt()
 
     if control.laser:
         steering.laser_on()
