@@ -36,20 +36,17 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     except KeyboardInterrupt:
         exit()
 
-
-def perform_control(control: Control, i: int) -> int:
+def perform_control(control:Control, i:int) -> int:
     if Control.is_control_active(control.pan, i):
         if control.pan > 0:
-            steering.set_direction_right()
+            steering.right()
         else:
-            steering.set_direction_left()
-        steering.pan()
+            steering.left()
     if Control.is_control_active(control.tilt, i):
         if control.tilt > 0:
-            steering.set_direction_up()
+            steering.up()
         else:
-            steering.set_direction_down()
-        steering.tilt()
+            steering.down()
 
     if control.laser:
         steering.laser_on()
@@ -57,7 +54,6 @@ def perform_control(control: Control, i: int) -> int:
         steering.laser_off()
 
     return (i+1) % 10
-
 
 if __name__ == "__main__":
     args = sys.argv
