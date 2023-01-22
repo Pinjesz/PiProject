@@ -127,10 +127,10 @@ controlInParser.add_argument(
     'vid', type=int, required=True, help='Vehicle ID'
 )
 controlInParser.add_argument(
-    'pan', type=int, required=True, help='Pan speed and direction'
+    'pan', type=float, required=True, help='Pan speed and direction'
 )
 controlInParser.add_argument(
-    'tilt', type=int, required=True, help='Tilt speed and direction'
+    'tilt', type=float, required=True, help='Tilt speed and direction'
 )
 controlInParser.add_argument(
     'laser', type=bool, required=True, help='Is laser on or off'
