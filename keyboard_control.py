@@ -17,7 +17,7 @@ class Keyboard(object):
         self._changed = False
         self._mutex = threading.Lock()
 
-    def setControl(self, control_name: str, control: float | bool) -> None:
+    def setControl(self, control_name: str, control) -> None:
         self._mutex.acquire()
         if self._controls[control_name] != control:
             print(f"Set control {control_name} to {control}")
@@ -155,6 +155,8 @@ def main(address: str, vid: int):
         print("Error starting key listener")
 
     url = f'http://{address}:5000/api/control'
+
+    print(f"Sending commands to vehicle {vid} on {address}")
     try:
         while True:
             time.sleep(0.01)
