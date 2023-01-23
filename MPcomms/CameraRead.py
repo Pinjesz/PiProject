@@ -19,7 +19,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
 
     cam = Picamera2()
     preview_config = cam.create_preview_configuration(
-        {"format": "BGR888", "size": (2*resolution[0], resolution[1])})
+        {"format": "RGB888", "size": (2*resolution[0], resolution[1])})
     cam.configure(preview_config)
     cam.start()
 
@@ -33,11 +33,11 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
             except Exception as e:
                 print("Error getting buffer: ", e)
             frame = np.zeros((resolution[1], 2*resolution[0], 3), np.uint8)
-            frame[:, :, 2] = np.reshape(
+            frame[:, :, 0] = np.reshape(    # R
                 buffer[0::3], (resolution[1], 2*resolution[0]))
-            frame[:, :, 1] = np.reshape(
+            frame[:, :, 1] = np.reshape(    # G
                 buffer[1::3], (resolution[1], 2*resolution[0]))
-            frame[:, :, 0] = np.reshape(
+            frame[:, :, 2] = np.reshape(    # B
                 buffer[2::3], (resolution[1], 2*resolution[0]))
             try:
                 if not right:
