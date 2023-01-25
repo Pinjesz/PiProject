@@ -58,17 +58,17 @@ emergencyOutModel = AccessPoint.api.model('EmergencyActionResponse', {
 # ---
 controlInModel = AccessPoint.api.model('ControlTowerRequest', {
     'vid': fields.Integer(required=True, description='Vehicle ID'),
-    'pan': fields.Float(required=True, description='Pan speed and direction'),
-    'tilt': fields.Float(required=True, description='Tilt speed and direction'),
-    'laser': fields.Boolean(required=True, description='Is laser on or off'),
+    'pan': fields.Integer(required=True, description='Pan angle diff'),
+    'tilt': fields.Integer(required=True, description='Tilt angle diff'),
+    'laser': fields.Boolean(required=True, description='Switch laser state'),
     'mgc': fields.Integer(required=True, default=Magic.TOWER_CONTROL.value, description='Magic number for verification')
 })
 # ---
 controlOutModel = AccessPoint.api.model('ControlTowerResponse', {
     'vid': fields.Integer(required=True, description='Vehicle ID'),
-    'pan': fields.Float(required=True, description='Pan speed and direction'),
-    'tilt': fields.Float(required=True, description='Tilt speed and direction'),
-    'laser': fields.Boolean(required=True, description='Is laser on or off'),
+    'pan': fields.Integer(required=True, description='Pan angle requested position'),
+    'tilt': fields.Integer(required=True, description='Tilt angle requested position'),
+    'laser': fields.Boolean(required=True, description='Switch laser state'),
 })
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
@@ -127,13 +127,13 @@ controlInParser.add_argument(
     'vid', type=int, required=True, help='Vehicle ID'
 )
 controlInParser.add_argument(
-    'pan', type=float, required=True, help='Pan speed and direction'
+    'pan', type=int, required=True, help='Pan angle diff'
 )
 controlInParser.add_argument(
-    'tilt', type=float, required=True, help='Tilt speed and direction'
+    'tilt', type=int, required=True, help='Tilt angle diff'
 )
 controlInParser.add_argument(
-    'laser', type=bool, required=True, help='Is laser on or off'
+    'laser', type=bool, required=True, help='Switch laser state'
 )
 controlInParser.add_argument(
     'mgc', type=int, required=True, help='Magic number for verification'
@@ -285,8 +285,8 @@ class SetTowerControl(Resource):
                     restAP.postControl(args['pan'], args['tilt'], args['laser'])
                     return {
                         'vid': restAP.getVehicleID(),
-                        'pan': restAP.lookupControl().pan,
-                        'tilt': restAP.lookupControl().tilt,
+                        'pan': restAP.lookupControl().set_pan,
+                        'tilt': restAP.lookupControl().set_tilt,
                         'laser': restAP.lookupControl().laser
                     }
                 else:

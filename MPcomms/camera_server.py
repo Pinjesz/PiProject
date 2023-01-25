@@ -23,7 +23,6 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
 
     steering.setup_pins()
     control = Control()
-    i = 0
     try:
         while True:
             time.sleep(0.001)
@@ -31,29 +30,31 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
                 if(restAP.controlChanged()):
                     control = restAP.pollControl()
                     print("Received new control: " + str(control))
-                i = perform_control(control, i)
+
+                perform_control(control)
 
     except KeyboardInterrupt:
         exit()
 
-def perform_control(control:Control, i:int) -> int:
-    if Control.is_control_active(control.pan, i):
-        if control.pan > 0:
-            steering.right()
-        else:
-            steering.left()
-    if Control.is_control_active(control.tilt, i):
-        if control.tilt > 0:
-            steering.up()
-        else:
-            steering.down()
 
+def perform_control(control: Control) -> None:
     if control.laser:
         steering.laser_on()
     else:
         steering.laser_off()
 
-    return (i+1) % 10
+    pan_diff = control.set_pan-control.current_pan
+    if pan_diff < 0:
+        steering.left()
+    if pan_diff > 0:
+        steering.right()
+
+    tilt_diff = control.set_tilt-control.current_tilt
+    if tilt_diff < 0:
+        steering.down()
+    if tilt_diff > 0:
+        steering.up()
+
 
 if __name__ == "__main__":
     args = sys.argv

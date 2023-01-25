@@ -145,11 +145,8 @@ class AccessPoint(object):
     def lookupControl(self) -> Control:
         return self._control.lookupControl()
 # ---
-    def postControl(self, pan:float, tilt:float, laser:bool) -> None:
-        self._control.postControl(Control(pan, tilt, laser))
-# ---
-    def setControl(self, control:Control) -> None:
-        self._control.setControl(control)
+    def postControl(self, pan:int, tilt:int, laser:bool) -> None:
+        self._control.postControl(pan, tilt, laser)
 # ---
 # --- AccessPoint ends here: ---
 
