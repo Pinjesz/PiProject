@@ -148,7 +148,7 @@ class AccessPoint(object):
     def postControl(self, pan:int, tilt:int, laser:bool) -> None:
         self._control.postControl(pan, tilt, laser)
 # ---
-    def updateControl(self, pan:int, tilt:int):
+    def updateControl(self, pan:float, tilt:float):
         self._control.updateControl(pan, tilt)
 # --- AccessPoint ends here: ---
 

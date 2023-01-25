@@ -27,27 +27,11 @@ class Control:
     min_tilt = -10
 
     def __init__(self) -> None:
-        self.current_pan: int = 0
-        self.current_tilt: int =  0
+        self.current_pan: float = 0
+        self.current_tilt: float = 0
         self.set_pan: int = 0
         self.set_tilt: int = 0
         self.laser: bool = False
-
-    # def __eq__(self, __o: object) -> bool:
-    #     if type(__o) != Control:
-    #         print("problem")
-    #         return False
-    #     other: Control = __o
-    #     if self.pan != other.pan:
-    #         return False
-    #     if self.tilt != other.tilt:
-    #         return False
-    #     if self.laser != other.laser:
-    #         return False
-    #     return True
-
-    # def __ne__(self, __o: object) -> bool:
-    #     return not self.__eq__(__o)
 
     def __str__(self) -> str:
         return f'Current: pan {self.current_pan}°, tilt {self.current_tilt}°, laser {"yes" if self.laser else "no"}\n \
@@ -57,17 +41,14 @@ class Control:
         self.set_pan += pan
         self.set_pan = min(max(Control.min_pan, self.set_pan), Control.max_pan)
         self.set_tilt += tilt
-        self.set_tilt = min(max(Control.min_tilt, self.set_tilt), Control.max_tilt)
+        self.set_tilt = min(
+            max(Control.min_tilt, self.set_tilt), Control.max_tilt)
         self.laser = (self.laser != laser)
 
-    def update(self, pan: int, tilt: int):
+    def update(self, pan: float, tilt: float):
         self.current_pan += pan
         self.current_tilt += tilt
 
-    # def is_control_active(speed: float, i: int) -> bool:
-    #     if Control.control_table[abs(speed)][i] == 1:
-    #         return True
-    #     return False
 
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 # SControl - synchronized control class:
@@ -105,7 +86,7 @@ class SControl(object):
         self._changed = True
         self._mutex.release()
 
-    def updateControl(self, pan: int, tilt: int) -> None:
+    def updateControl(self, pan: float, tilt: float) -> None:
         self._mutex.acquire()
         self._control.update(pan, tilt)
         self._mutex.release()

@@ -45,19 +45,19 @@ def perform_control(control: Control) -> Control:
 
     pan_diff = control.set_pan-control.current_pan
     pan_angle = 0
-    if pan_diff < 0:
+    if pan_diff <= -1:
         steering.left()
-        pan_angle = -1
-    if pan_diff > 0:
+        pan_angle = -0.3
+    if pan_diff >= 1:
         steering.right()
-        pan_angle = 1
+        pan_angle = 0.3
 
     tilt_diff = control.set_tilt-control.current_tilt
     tilt_angle = 0
-    if tilt_diff < 0:
+    if tilt_diff <= -1:
         steering.down()
         tilt_angle = -1
-    if tilt_diff > 0:
+    if tilt_diff >= 1:
         steering.up()
         tilt_angle = 1
 
