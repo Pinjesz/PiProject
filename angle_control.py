@@ -55,11 +55,11 @@ def main(address: str, vid: int):
                 'laser': laser,
                 'mgc': 43795
             }
-            result = requests.post(url, json=content)
+            result = requests.post(url, json=content).json()
 
             print(f"Control send: pan {pan}°, tilt {tilt}°, laser {laser}")
             print(
-                f"Goal set: pan {result['pan']}°, tilt {result['pan']}°, laser {result['laser']}")
+                f"Goal set: pan {result['pan']}°, tilt {result['tilt']}°, laser {result['laser']}")
         except Exception as e:
             print("Cannot send request:", e)
 

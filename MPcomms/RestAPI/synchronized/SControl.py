@@ -60,6 +60,10 @@ class Control:
         self.set_tilt = min(max(Control.min_tilt, self.set_tilt), Control.max_tilt)
         self.laser = (self.laser != laser)
 
+    def update(self, pan: int, tilt: int):
+        self.current_pan += pan
+        self.current_tilt += tilt
+
     # def is_control_active(speed: float, i: int) -> bool:
     #     if Control.control_table[abs(speed)][i] == 1:
     #         return True
@@ -99,5 +103,10 @@ class SControl(object):
         self._mutex.acquire()
         self._control.add(pan, tilt, laser)
         self._changed = True
+        self._mutex.release()
+
+    def updateControl(self, pan: int, tilt: int) -> None:
+        self._mutex.acquire()
+        self._control.update(pan, tilt)
         self._mutex.release()
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---

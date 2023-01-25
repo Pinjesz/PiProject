@@ -31,29 +31,38 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
                     control = restAP.pollControl()
                     print("Received new control: " + str(control))
 
-                perform_control(control)
+                control = perform_control(control)
 
     except KeyboardInterrupt:
         exit()
 
 
-def perform_control(control: Control) -> None:
+def perform_control(control: Control) -> Control:
     if control.laser:
         steering.laser_on()
     else:
         steering.laser_off()
 
     pan_diff = control.set_pan-control.current_pan
+    pan_angle = 0
     if pan_diff < 0:
         steering.left()
+        pan_angle = -1
     if pan_diff > 0:
         steering.right()
+        pan_angle = 1
 
     tilt_diff = control.set_tilt-control.current_tilt
+    tilt_angle = 0
     if tilt_diff < 0:
         steering.down()
+        tilt_angle = -1
     if tilt_diff > 0:
         steering.up()
+        tilt_angle = 1
+
+    restAP.updateControl(pan_angle, tilt_angle)
+    return restAP.lookupControl()
 
 
 if __name__ == "__main__":
