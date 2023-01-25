@@ -85,7 +85,7 @@ def main(address: str, vid: int):
                 on_release=on_release) as listener:
             listener.join()
     except:
-        print("Error starting key listener")
+        print("Finished")
 
 
 if __name__ == "__main__":
