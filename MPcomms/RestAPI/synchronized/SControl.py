@@ -24,7 +24,7 @@ class Control:
     min_pan = -170
 
     max_tilt = 20
-    min_tilt = 10
+    min_tilt = -10
 
     def __init__(self) -> None:
         self.current_pan: int = 0

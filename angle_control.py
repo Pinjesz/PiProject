@@ -1,54 +1,7 @@
 from pynput.keyboard import Key, Listener
 import requests
-import threading
 import sys
-import time
 import random
-
-
-class Keyboard(object):
-    def __init__(self) -> None:
-        self._controls = {
-            'pan': 0,
-            'tilt': 0,
-            'laser': 0
-        }
-        self._speed = 1
-        self._changed = False
-        self._mutex = threading.Lock()
-
-    def setControl(self, control_name: str, control) -> None:
-        self._mutex.acquire()
-        if self._controls[control_name] != control:
-            print(f"Set control {control_name} to {control}")
-            self._controls[control_name] = control
-            self._changed = True
-        self._mutex.release()
-
-    def setSpeed(self, speed: float) -> None:
-        self._mutex.acquire()
-        self._speed = speed
-        print(f"Set speed to {speed}")
-        self._mutex.release()
-
-    def isChanged(self) -> bool:
-        self._mutex.acquire()
-        retval = self._changed
-        self._mutex.release()
-        return retval
-
-    def pollControl(self) -> dict:
-        self._mutex.acquire()
-        retval = self._controls
-        self._changed = False
-        self._mutex.release()
-        return retval
-
-    def getSpeed(self) -> dict:
-        self._mutex.acquire()
-        retval = self._speed
-        self._mutex.release()
-        return retval
 
 
 def connect(address: str) -> int:
@@ -102,7 +55,11 @@ def main(address: str, vid: int):
                 'laser': laser,
                 'mgc': 43795
             }
-            requests.post(url, json=content)
+            result = requests.post(url, json=content)
+
+            print(f"Control send: pan {pan}°, tilt {tilt}°, laser {laser}")
+            print(
+                f"Goal set: pan {result['pan']}°, tilt {result['pan']}°, laser {result['laser']}")
         except Exception as e:
             print("Cannot send request:", e)
 
