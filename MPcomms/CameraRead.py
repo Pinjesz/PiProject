@@ -8,6 +8,8 @@ from picamera2 import Picamera2
 def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     left = True
     right = True
+    width = resolution[0]
+    height = resolution[1]
     if camera_choose == 'l':
         right = False
         print(f"Left camera, resolution: {resolution[0]} x {resolution[1]}")
@@ -16,6 +18,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
         print(f"Right camera, resolution: {resolution[0]} x {resolution[1]}")
     else:
         print(f"Both cameras, resolution: {resolution[0]} x {resolution[1]}")
+        width = 2*width
 
     cam = Picamera2()
     preview_config = cam.create_preview_configuration(
@@ -23,7 +26,7 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     cam.configure(preview_config)
     cam.start()
 
-    streamer_rgb = VS.VideoStreamer('rgb')
+    streamer_rgb = VS.VideoStreamer('rgb', width=width, height=height)
     streamer_rgb.run()
 
     try:
