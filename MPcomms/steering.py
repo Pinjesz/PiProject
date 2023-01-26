@@ -81,13 +81,9 @@ def basing():
         time.sleep(0.001)
         down()
 
-    # for _ in range(1400):
-    #     time.sleep(0.001)
-    #     up()
-
-    # for _ in range(1400):
-    #     time.sleep(0.001)
-    #     up()
+    for _ in range(1400):
+        time.sleep(0.001)
+        up()
 
     # while not pan_limit_reached():
     #     time.sleep(0.001)
