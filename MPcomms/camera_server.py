@@ -8,18 +8,19 @@ from RestAPI.synchronized.SControl import Control
 
 
 def run(resolution: list = (640, 480), camera_choose: str = 'b'):
-    # Start server as daemon:
-    restAP.run_async()
-
-    print("Server started on address localhost:5000/api")
-    print("Documentation accessible at http://localhost:5000/api/doc")
-
     def run_camera():
         CameraRead.run(resolution, camera_choose)
 
     cameras_thread = threading.Thread(target=run_camera)
     cameras_thread.daemon = True
     cameras_thread.start()
+
+    steering.basing()
+
+    # Start server as daemon:
+    restAP.run_async()
+    print("Server started on address localhost:5000/api")
+    print("Documentation accessible at http://localhost:5000/api/doc")
 
     steering.setup_pins()
     control = Control()
@@ -30,7 +31,6 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
                 if(restAP.controlChanged()):
                     control = restAP.pollControl()
                     print("Received new control: " + str(control))
-
                 control = perform_control(control)
 
     except KeyboardInterrupt:
@@ -43,23 +43,26 @@ def perform_control(control: Control) -> Control:
     else:
         steering.laser_off()
 
+    pan_degrees_per_step = 0.55
+    tilt_degrees_per_step = 0.015
+
     pan_diff = control.set_pan-control.current_pan
     pan_angle = 0
-    if pan_diff <= -1:
+    if pan_diff <= -pan_degrees_per_step:
         steering.left()
-        pan_angle = -0.58
-    if pan_diff >= 1:
+        pan_angle = -pan_degrees_per_step
+    if pan_diff >= pan_degrees_per_step:
         steering.right()
-        pan_angle = 0.58
+        pan_angle = pan_degrees_per_step
 
     tilt_diff = control.set_tilt-control.current_tilt
     tilt_angle = 0
-    if tilt_diff <= -0.03:
+    if tilt_diff <= -tilt_degrees_per_step:
         steering.down()
-        tilt_angle = -0.015
-    if tilt_diff >= 0.03:
+        tilt_angle = -tilt_degrees_per_step
+    if tilt_diff >= tilt_degrees_per_step:
         steering.up()
-        tilt_angle = 0.015
+        tilt_angle = tilt_degrees_per_step
 
     restAP.updateControl(pan_angle, tilt_angle)
     return restAP.lookupControl()

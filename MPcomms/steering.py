@@ -22,14 +22,13 @@ def setup_pins():
     GPIO.setup(PAN_STEP, GPIO.OUT)
     GPIO.setup(PAN_DIR, GPIO.OUT)
     GPIO.setup(PAN_M0, GPIO.OUT)
-    GPIO.setup(PAN_SWITCH, GPIO.OUT)
+    GPIO.setup(PAN_SWITCH, GPIO.IN)
     GPIO.setup(TILT_STEP, GPIO.OUT)
     GPIO.setup(TILT_DIR, GPIO.OUT)
-    GPIO.setup(TILT_SWITCH, GPIO.OUT)
+    GPIO.setup(TILT_SWITCH, GPIO.IN)
     GPIO.setup(LASER, GPIO.OUT)
+
     GPIO.output(PAN_M0, GPIO.LOW)
-    GPIO.output(PAN_SWITCH, GPIO.LOW)
-    GPIO.output(TILT_SWITCH, GPIO.LOW)
     GPIO.output(LASER, GPIO.LOW)
 
 
@@ -69,24 +68,40 @@ def laser_off():
     GPIO.output(LASER, GPIO.LOW)
 
 
-def steer(c: str):
-    laser_off()
-    if c == 'a':
-        left()
-    elif c == 'd':
-        right()
-    elif c == 'w':
-        up()
-    elif c == 's':
+def pan_limit_reached() -> bool:
+    return GPIO.input(PAN_SWITCH)
+
+
+def tilt_limit_reached() -> bool:
+    return GPIO.input(TILT_SWITCH)
+
+
+def basing():
+    while not tilt_limit_reached():
+        time.sleep(0.001)
         down()
-    elif c == ' ':
-        laser_on()
-    elif c == 'q':
-        print("Finished")
-        exit()
+
+    for _ in range(1000):
+        time.sleep(0.001)
+        up()
 
 
 def main():
+    def steer(c: str):
+        laser_off()
+        if c == 'a':
+            left()
+        elif c == 'd':
+            right()
+        elif c == 'w':
+            up()
+        elif c == 's':
+            down()
+        elif c == ' ':
+            laser_on()
+        elif c == 'q':
+            print("Finished")
+            exit()
     try:
         while True:
             c = readchar.readchar()
