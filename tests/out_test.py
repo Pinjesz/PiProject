@@ -9,10 +9,10 @@ def main(PIN):
     GPIO.setup(PIN, GPIO.OUT)
 
     while True:
-        print(f"low {PIN}")
+        print(f"pin {PIN} is low")
         GPIO.output(PIN, GPIO.LOW)
         time.sleep(2)
-        print(f"high {PIN}")
+        print(f"pin  {PIN} is high")
         GPIO.output(PIN, GPIO.HIGH)
         time.sleep(2)
 

@@ -28,7 +28,7 @@ def setup_pins():
     GPIO.setup(TILT_SWITCH, GPIO.IN)
     GPIO.setup(LASER, GPIO.OUT)
 
-    GPIO.output(PAN_M0, GPIO.LOW)
+    GPIO.output(PAN_M0, GPIO.HIGH)
     GPIO.output(LASER, GPIO.LOW)
 
 
@@ -85,9 +85,21 @@ def basing():
     #     time.sleep(0.001)
     #     up()
 
-    for _ in range(200):
-        time.sleep(0.5)
+    for _ in range(620):
+        time.sleep(0.001)
         right()
+
+    for _ in range(1240):
+        time.sleep(0.001)
+        left()
+
+    for _ in range(1240):
+        time.sleep(0.001)
+        right()
+
+    for _ in range(620):
+        time.sleep(0.001)
+        left()
 
 
 def main():
