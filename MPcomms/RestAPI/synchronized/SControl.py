@@ -29,15 +29,15 @@ class Control:
     def __init__(self) -> None:
         self.current_pan: float = 0
         self.current_tilt: float = 0
-        self.set_pan: int = 0
-        self.set_tilt: int = 0
+        self.set_pan: float = 0
+        self.set_tilt: float = 0
         self.laser: bool = False
 
     def __str__(self) -> str:
         return f'Current: pan {self.current_pan}°, tilt {self.current_tilt}°, laser {"yes" if self.laser else "no"}\n \
                  Goal   : pan {self.set_pan}°, tilt {self.set_tilt}°'
 
-    def add(self, pan: int, tilt: int, laser: bool):
+    def add(self, pan: float, tilt: float, laser: bool):
         self.set_pan += pan
         self.set_pan = min(max(Control.min_pan, self.set_pan), Control.max_pan)
         self.set_tilt += tilt
@@ -80,7 +80,7 @@ class SControl(object):
         self._mutex.release()
         return retval
 
-    def postControl(self, pan: int, tilt: int, laser: bool) -> None:  # sets _changed flag
+    def postControl(self, pan: float, tilt: float, laser: bool) -> None:  # sets _changed flag
         self._mutex.acquire()
         self._control.add(pan, tilt, laser)
         self._changed = True

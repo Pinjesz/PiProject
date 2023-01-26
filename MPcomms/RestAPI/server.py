@@ -58,16 +58,16 @@ emergencyOutModel = AccessPoint.api.model('EmergencyActionResponse', {
 # ---
 controlInModel = AccessPoint.api.model('ControlTowerRequest', {
     'vid': fields.Integer(required=True, description='Vehicle ID'),
-    'pan': fields.Integer(required=True, description='Pan angle diff'),
-    'tilt': fields.Integer(required=True, description='Tilt angle diff'),
+    'pan': fields.Float(required=True, description='Pan angle diff'),
+    'tilt': fields.Float(required=True, description='Tilt angle diff'),
     'laser': fields.Boolean(required=True, description='Switch laser state'),
     'mgc': fields.Integer(required=True, default=Magic.TOWER_CONTROL.value, description='Magic number for verification')
 })
 # ---
 controlOutModel = AccessPoint.api.model('ControlTowerResponse', {
     'vid': fields.Integer(required=True, description='Vehicle ID'),
-    'pan': fields.Integer(required=True, description='Pan angle requested position'),
-    'tilt': fields.Integer(required=True, description='Tilt angle requested position'),
+    'pan': fields.Float(required=True, description='Pan angle requested position'),
+    'tilt': fields.Float(required=True, description='Tilt angle requested position'),
     'laser': fields.Boolean(required=True, description='Switch laser state'),
 })
 # --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
@@ -127,10 +127,10 @@ controlInParser.add_argument(
     'vid', type=int, required=True, help='Vehicle ID'
 )
 controlInParser.add_argument(
-    'pan', type=int, required=True, help='Pan angle diff'
+    'pan', type=float, required=True, help='Pan angle diff'
 )
 controlInParser.add_argument(
-    'tilt', type=int, required=True, help='Tilt angle diff'
+    'tilt', type=float, required=True, help='Tilt angle diff'
 )
 controlInParser.add_argument(
     'laser', type=bool, required=True, help='Switch laser state'
