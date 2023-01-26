@@ -10,11 +10,11 @@ from RestAPI.synchronized.SControl import Control
 def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     def run_camera():
         CameraRead.run(resolution, camera_choose)
-
     cameras_thread = threading.Thread(target=run_camera)
     cameras_thread.daemon = True
     cameras_thread.start()
 
+    steering.setup_pins()
     steering.basing()
 
     # Start server as daemon:
@@ -22,7 +22,6 @@ def run(resolution: list = (640, 480), camera_choose: str = 'b'):
     print("Server started on address localhost:5000/api")
     print("Documentation accessible at http://localhost:5000/api/doc")
 
-    steering.setup_pins()
     control = Control()
     try:
         while True:

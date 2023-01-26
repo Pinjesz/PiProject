@@ -1,5 +1,3 @@
 ./MPcomms/nginx-settings/apply_settings.sh
 ./MPcomms/start_nginx.sh
-python MPcomms/ex-API-standalone.py
-python MPcomms/ex-RTMP-dummy-vs.py
 python MPcomms/camera_server.py
