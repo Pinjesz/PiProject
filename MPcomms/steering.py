@@ -91,11 +91,11 @@ def basing():
     while not pan_limit_reached() and i < 1300:
         i += 1
         time.sleep(0.001)
-        right()
-
-    for _ in range(600):
-        time.sleep(0.001)
         left()
+
+    for _ in range(590):
+        time.sleep(0.001)
+        right()
 
 
 def main():
