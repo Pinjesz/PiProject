@@ -42,7 +42,10 @@ def perform_control(control: Control) -> Control:
     else:
         steering.laser_off()
 
-    pan_degrees_per_step = 0.55
+    pan_steps_per_degree = 1240/360
+    tilt_steps_per_degree = 1240/360
+
+    pan_degrees_per_step = 1/pan_steps_per_degree
     tilt_degrees_per_step = 0.015
 
     pan_diff = control.set_pan-control.current_pan
