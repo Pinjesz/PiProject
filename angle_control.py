@@ -65,13 +65,13 @@ def main(address: str, vid: int):
 
     def on_press(key):
         if key == Key.right:
-            send_control(45, 0, False)
+            send_control(10, 0, False)
         if key == Key.left:
-            send_control(-45, 0, False)
+            send_control(-10, 0, False)
         if key == Key.up:
-            send_control(0, 10, False)
+            send_control(0, 1, False)
         if key == Key.down:
-            send_control(0, -10, False)
+            send_control(0, -1, False)
         if key == Key.space:
             send_control(0, 0, True)
 
