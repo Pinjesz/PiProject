@@ -77,7 +77,9 @@ def tilt_limit_reached() -> bool:
 
 
 def basing():
-    while not tilt_limit_reached():
+    i = 0
+    while not tilt_limit_reached() and i < 3000:
+        i += 1
         time.sleep(0.001)
         down()
 
@@ -85,14 +87,15 @@ def basing():
         time.sleep(0.001)
         up()
 
-    # while not pan_limit_reached():
-    #     time.sleep(0.001)
-    #     right()
+    i = 0
+    while not pan_limit_reached() and i < 1300:
+        i += 1
+        time.sleep(0.001)
+        right()
 
-    # for _ in range(600):
-    #     time.sleep(0.001)
-    #     left()
-
+    for _ in range(600):
+        time.sleep(0.001)
+        left()
 
 
 def main():
