@@ -282,7 +282,8 @@ class SetTowerControl(Resource):
             args = controlInParser.parse_args()
             if(args['mgc'] == Magic.TOWER_CONTROL.value):
                 if(args['vid'] == restAP.getVehicleID()):
-                    restAP.postControl(args['pan'], args['tilt'], args['laser'])
+                    restAP.postControl(
+                        args['pan'], args['tilt'], args['laser'])
                     return {
                         'vid': restAP.getVehicleID(),
                         'pan': restAP.lookupControl().set_pan,
@@ -290,7 +291,8 @@ class SetTowerControl(Resource):
                         'laser': restAP.lookupControl().laser
                     }
                 else:
-                    abort(404, "There is no active connection with passed ID")
+                    abort(404, "There is no active \
+connection with passed ID")
             else:
                 abort(406, "Wrong operation code number")
         else:

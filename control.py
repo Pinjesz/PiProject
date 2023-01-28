@@ -58,16 +58,16 @@ def main(address: str, vid: int):
             result = requests.post(url, json=content).json()
 
             print(f"Control send: pan {pan}°, tilt {tilt}°, laser {laser}")
-            print(
-                f"Goal set: pan {result['pan']}°, tilt {result['tilt']}°, laser {result['laser']}")
+            print(f"Goal set: pan {result['pan']}°, \
+tilt {result['tilt']}°, laser {result['laser']}")
         except Exception as e:
             print("Cannot send request:", e)
 
     def on_press(key):
         if key == Key.right:
-            send_control(42.5, 0, False)
+            send_control(20, 0, False)
         if key == Key.left:
-            send_control(-42.5, 0, False)
+            send_control(20, 0, False)
         if key == Key.up:
             send_control(0, 1, False)
         if key == Key.down:
